@@ -1,0 +1,147 @@
+from abc import abstractmethod, ABC
+
+class Vacinas (ABC):
+    def __init__(self, nDoses, aprovada, preco, tecnologia):
+        self.__numDoses = nDoses
+        self.__aprovada = False
+        self.__preco = preco
+        self.__tecnologia = tecnologia
+
+    @property
+    def numDoses(self):
+        return self.__numDoses
+
+    @numDoses.setter
+    def numDoses(self, novonum):
+        self.__numDoses = novonum
+
+    @property
+    def aprovada(self):
+        return self.__aprovada
+
+    @aprovada.setter
+    def aprovada(self, status):
+        self.__aprovada = status
+
+    @property
+    def preco(self):
+        return self.__preco
+
+    @preco.setter
+    def preco(self, novoPreco):
+        assert novoPreco >= 0
+        self.__preco = novoPreco
+
+    @property
+    def tecnologia(self, ):
+        return self.__tecnologia
+
+    @tecnologia.setter
+    def tecnologia(self, tec):
+        self.__tecnologia = tec
+
+    @abstractmethod
+    def country(self):
+        pass
+
+class Oxford(Vacinas):
+  __LABORATORIO = 'AstraZeneca'
+  def __init__(self, nDoses , intervalo, tecnologia, eficacia):
+    super().__init__(nDoses, tecnologia)
+    self.__intervalo = intervalo
+    self.__eficaciaGlobal = eficacia
+  
+  @property
+  def intervalo(self):
+    return self.__intervalo
+
+  @intervalo.setter
+  def intervalo(self, novoIntervalo):
+    self.__intervalo = novoIntervalo
+
+  def country(self):
+    return 'England'
+
+  @classmethod
+  def laboratorio(cls):
+    return cls.__LABORATORIO
+
+  def __str__(self):
+    return f'''
+Vacina {Oxford.__name__}, 
+Laboratório: {Oxford.__LABORATORIO}, 
+Numero de Doses = {self.__numDoses}, 
+Tecnologia: {self.__tecnologia}, 
+Intervalo mínimo para aplicação da próxima dose: {self.__intervalo}, 
+Eficacia: {self.__eficaciaGlobal}%'''
+
+class Sinovac:
+  __LABORATORIO = 'Sinovac BioTech'
+  def __init__(self, nDoses , intervalo, tecnologia, voluntarios ):
+    super().__init__(nDoses, tecnologia)
+    self.__intervalo = intervalo # intervalo mínimo para a próxima dose
+    self.__voluntarios = voluntarios #voluntários em ensaios clínicos no Brasil
+    
+  @property
+  def voluntarios(self):
+    return self.__voluntarios
+
+  @voluntarios.setter
+  def volutarios(self, novoNumero):
+    self.__voluntarios = novoNumero
+
+  @property
+  def intervalo(self):
+    return self.__intervalo
+
+  @intervalo.setter
+  def intervalo(self, novoIntervalo):
+    self.__intervalo = novoIntervalo
+
+  def country(self):
+    return 'China'
+
+  @classmethod
+  def laboratorio(cls):
+    return cls.__LABORATORIO
+
+  def __str__(self):
+    return f'''
+Vacina {Sinovac.__name__}, 
+Laboratório: {Sinovac.__LABORATORIO}, 
+Numero de Doses = {self.__numDoses}, 
+Tecnologia: {self.__tecnologia},
+Intervalo mínimo para aplicação da próxima dose: {self.__intervalo}, 
+Voluntários nos ensaios clínicos (BR): {self.__voluntarios}'''
+
+
+
+class Janssen:
+  __LABORATORIO = 'Johnson & Johnson'
+  def __init__(self, nDoses , tecnologia, armazenamento ):
+    super().__init__(nDoses, tecnologia)
+    self.__armazenamento = armazenamento
+    
+  @property
+  def armazenamento(self):
+    return self.__armazenamento
+
+  @armazenamento.setter
+  def armazenamento(self, novoArmazenamento):
+    self.__armazenamento = novoArmazenamento
+
+
+  def country(self):
+    return 'USA'
+
+  @classmethod
+  def laboratorio(cls):
+    return cls.__LABORATORIO
+
+  def __str__(self):
+    return f'''
+Vacina {Janssen.__name__}, 
+Laboratório: {Janssen.__LABORATORIO}, 
+Numero de Doses = {self.__numDoses}, 
+Tecnologia: {self.__tecnologia}, 
+Armazenamento: {self.__armazenamento}'''
